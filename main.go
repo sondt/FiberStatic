@@ -1,6 +1,7 @@
 package main
 
 import (
+	"FiberStatic/services"
 	imageHelper "FiberStatic/utils"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
@@ -38,6 +39,13 @@ func main() {
 		return imageHelper.ProcessRewriteImage(c)
 	})
 
+	//weather api
+	app.Get("/weather/:cityCode", func(c *fiber.Ctx) error {
+		content := services.GetWeather(c.Params("cityCode"))
+		return c.JSON(content)
+		//return c.SendString(content)
+	})
+
 	//config static folder
 	app.Static("/", "./"+publicFolder, fiber.Static{
 		Compress:  true,
@@ -55,7 +63,7 @@ func main() {
 		port = os.Getenv("ASPNETCORE_PORT")
 	}
 	//103.27.237.189
-	err := app.Listen(":" + port)
+	err := app.Listen("44.203.60.124:" + port)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
