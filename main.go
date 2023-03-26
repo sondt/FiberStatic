@@ -58,7 +58,7 @@ func main() {
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World! 👋!")
 	})
-	port := "3000"
+	port := "80"
 	if os.Getenv("ASPNETCORE_PORT") != "" { // get enviroment variable that set by ACNM
 		port = os.Getenv("ASPNETCORE_PORT")
 	}
