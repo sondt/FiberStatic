@@ -23,3 +23,8 @@ GOOS=windows GOARCH=amd64 go build main.go
 ```
 
 ![img.png](img.png)
+
+## Refer document deploy on AWS
+https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_go.html
+
+https://medium.ninja/hackernoon/deploying-a-go-application-on-aws-ec2-76390c09c2c5

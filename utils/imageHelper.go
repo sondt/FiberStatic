@@ -69,6 +69,7 @@ var resizedFolder = "resized"
 func ProcessRewriteImage(c *fiber.Ctx) error {
 	resizeType := c.Params("type")
 	resizePath := strings.ToLower(c.Path())
+
 	arr := strings.Split(resizePath, "/")
 	folders := arr[0 : len(arr)-1]
 	resizePath = resizedFolder + strings.Join(folders, "/")
@@ -77,6 +78,7 @@ func ProcessRewriteImage(c *fiber.Ctx) error {
 		arr = strings.Split(fileName, "?")
 		fileName = arr[0]
 	}
+
 	err := CreateFolder(resizePath)
 	if err != nil {
 		return c.SendStatus(500)

@@ -12,11 +12,13 @@ import (
 
 var c = cache.New(60*time.Minute, 60*time.Minute)
 
+// GetWeather get weather from cache
 func GetWeather(cityCode string) string {
+	start := time.Now()
 	cacheKey := fmt.Sprintf("weather-%s", strings.ToLower(cityCode))
 	weather, found := c.Get(cacheKey)
 	if found {
-		fmt.Println("Get weather from cache")
+		fmt.Println("Get weather from cache in ", time.Since(start))
 		return weather.(string)
 	}
 	url := fmt.Sprintf("https://service.baomoi.com/weather-%s-4.json", cityCode)

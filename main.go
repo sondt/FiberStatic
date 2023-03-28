@@ -42,7 +42,7 @@ func main() {
 	//weather api
 	app.Get("/weather/:cityCode", func(c *fiber.Ctx) error {
 		content := services.GetWeather(c.Params("cityCode"))
-		return c.JSON(content)
+		return c.SendString(content)
 		//return c.SendString(content)
 	})
 
@@ -51,7 +51,7 @@ func main() {
 		Compress:  true,
 		ByteRange: true,
 		Index:     "index.html",
-		Browse:    true,
+		Browse:    false,
 		MaxAge:    3600,
 	})
 
@@ -63,7 +63,7 @@ func main() {
 		port = os.Getenv("ASPNETCORE_PORT")
 	}
 	//103.27.237.189
-
+	//123.30.177.152
 	err := app.Listen(":" + port)
 	if err != nil {
 		fmt.Println(err.Error())
