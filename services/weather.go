@@ -50,5 +50,5 @@ func baoMoiRequest(url string) string {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	return string(body)
+	return strings.ReplaceAll(string(body), "https://baomoi-static.zadn.vn/infoservice/images/weathericons/set61/", "")
 }

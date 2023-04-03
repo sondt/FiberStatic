@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cache"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"os"
 )
@@ -19,13 +20,19 @@ func main() {
 	})
 
 	//config cache client
-	app.Use(cache.New(cache.Config{
-		Next: func(c *fiber.Ctx) bool {
-			return c.Query("no-cache") == "true"
-		},
-		Expiration:   10 * 60 * 1000, // 10 minutes
-		CacheControl: true,
-	}))
+	app.Use(
+		cache.New(cache.Config{
+			Next: func(c *fiber.Ctx) bool {
+				return c.Query("no-cache") == "true"
+			},
+			Expiration:   60,
+			CacheControl: true,
+		}),
+		cors.New(cors.Config{
+			AllowOrigins:     "https://localhost:5001, https://tienphong.vn, https://beta.tienphongonline.vn",
+			AllowHeaders:     "Origin, Content-Type, Accept",
+			AllowCredentials: true,
+		}))
 
 	//config logger
 	app.Use(logger.New(logger.Config{
@@ -42,8 +49,8 @@ func main() {
 	//weather api
 	app.Get("/weather/:cityCode", func(c *fiber.Ctx) error {
 		content := services.GetWeather(c.Params("cityCode"))
+		c.Set("Content-Type", "application/json")
 		return c.SendString(content)
-		//return c.SendString(content)
 	})
 
 	//config static folder
